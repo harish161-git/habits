@@ -161,11 +161,24 @@ body{
 .streak-l{font-size:8px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase}
 .h-card.done .streak-n{color:var(--g0)}
 
-/* Meal flow */
-.meal-flow{display:flex;align-items:center;gap:4px;padding:0 16px 14px;flex-wrap:wrap}
-.m-pill{font-family:'Syne',sans-serif;font-size:10px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--ink4);color:var(--mid);border:1px solid var(--line);letter-spacing:.04em}
-.m-arr{font-size:9px;color:var(--line2)}
-.h-card.done .m-pill{background:rgba(139,239,58,0.08);color:var(--g0);border-color:rgba(139,239,58,0.2)}
+/* Meal flow / sub-checkboxes */
+.sub-checks{display:flex;flex-direction:column;gap:1px;padding:0 0 6px}
+.sub-row{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;border-top:1px solid var(--line);transition:background .15s}
+.sub-row:active{background:var(--ink3)}
+.sub-row.done{background:rgba(139,239,58,0.04)}
+.sub-chk{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+.sub-row.done .sub-chk{background:var(--g1);border-color:var(--g1)}
+.sub-chk svg{opacity:0;transform:scale(.4);transition:all .18s}
+.sub-row.done .sub-chk svg{opacity:1;transform:scale(1)}
+.sub-label{font-size:13px;color:var(--mid);flex:1;transition:color .2s}
+.sub-row.done .sub-label{color:var(--g0)}
+.sub-badge{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--dim);background:var(--ink4);border-radius:6px;padding:2px 6px}
+.sub-row.done .sub-badge{color:var(--g0);background:rgba(139,239,58,0.1)}
+/* violet variant for supplements */
+.sub-row.done-v{background:rgba(192,132,252,0.04)}
+.sub-row.done-v .sub-chk{background:var(--v0);border-color:var(--v0)}
+.sub-row.done-v .sub-label{color:var(--v0)}
+.sub-row.done-v .sub-badge{color:var(--v0);background:rgba(192,132,252,0.1)}
 
 /* Water */
 .glasses-grid{display:flex;gap:6px;padding:0 16px 14px;flex-wrap:wrap}
@@ -372,18 +385,12 @@ body{
 
       <div class="section-hd"><div class="section-hd-line"></div><div class="section-hd-txt">Diet</div><div class="section-hd-line"></div></div>
       <div class="h-card" id="dietCard">
-        <div class="h-row" onclick="toggle('diet')">
+        <div class="h-row" style="cursor:default">
           <div class="h-check" id="dietChk"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><polyline points="1,5 5,9 12,1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="h-info"><div class="h-name">Diet / Nutrition</div><div class="h-sub">Clean eating — tap when today is done</div></div>
+          <div class="h-info"><div class="h-name">Diet / Nutrition</div><div class="h-sub">Tap each meal as you go</div></div>
           <div class="streak-tag" id="dietST"><div class="streak-n">0</div><div class="streak-l">streak</div></div>
         </div>
-        <div class="meal-flow">
-          <span class="m-pill">Breakfast</span><span class="m-arr">›</span>
-          <span class="m-pill">Snack</span><span class="m-arr">›</span>
-          <span class="m-pill">Lunch</span><span class="m-arr">›</span>
-          <span class="m-pill">Snack</span><span class="m-arr">›</span>
-          <span class="m-pill">Dinner</span>
-        </div>
+        <div class="sub-checks" id="dietSubChecks"></div>
       </div>
 
       <div class="section-hd"><div class="section-hd-line"></div><div class="section-hd-txt">Sleep</div><div class="section-hd-line"></div></div>
@@ -399,7 +406,7 @@ body{
       <div class="h-card" id="waterCard">
         <div class="h-row" style="cursor:default">
           <div class="h-check" id="waterChk"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><polyline points="1,5 5,9 12,1" stroke="#0a1a00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="h-info"><div class="h-name" id="waterTitle">Drink Water</div><div class="h-sub">3L/day · creatine pulls extra water into muscles</div></div>
+          <div class="h-info"><div class="h-name" id="waterTitle">Drink Water</div><div class="h-sub">3 × 1L bottle/day · creatine needs extra hydration</div></div>
           <div class="streak-tag" id="waterST"><div class="streak-n">0</div><div class="streak-l">streak</div></div>
         </div>
         <div class="glasses-grid" id="glassGrid"></div>
@@ -420,6 +427,24 @@ body{
           <div class="h-info"><div class="h-name">Night routine</div><div class="h-sub">Skincare + brush + floss</div></div>
           <div class="streak-tag" id="skPMST"><div class="streak-n">0</div><div class="streak-l">streak</div></div>
         </div>
+      </div>
+
+      <div class="section-hd"><div class="section-hd-line"></div><div class="section-hd-txt">Supplements</div><div class="section-hd-line"></div></div>
+      <div class="h-card" id="suppAMCard">
+        <div class="h-row" style="cursor:default">
+          <div class="h-check" id="suppAMChk"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><polyline points="1,5 5,9 12,1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="h-info"><div class="h-name">Morning supplements</div><div class="h-sub">Tap each as you take them</div></div>
+          <div class="streak-tag" id="suppAMST"><div class="streak-n">0</div><div class="streak-l">streak</div></div>
+        </div>
+        <div class="sub-checks" id="suppAMSubChecks"></div>
+      </div>
+      <div class="h-card" id="suppPMCard">
+        <div class="h-row" style="cursor:default">
+          <div class="h-check" id="suppPMChk"><svg width="13" height="10" viewBox="0 0 13 10" fill="none"><polyline points="1,5 5,9 12,1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="h-info"><div class="h-name">Night supplements</div><div class="h-sub">Before bed</div></div>
+          <div class="streak-tag" id="suppPMST"><div class="streak-n">0</div><div class="streak-l">streak</div></div>
+        </div>
+        <div class="sub-checks" id="suppPMSubChecks"></div>
       </div>
       <div style="height:8px"></div>
     </div>
@@ -520,6 +545,8 @@ const HABITS=[
   {id:'water',  lbl:'Water 3L',  ico:'💧',xp:20},
   {id:'skAM',   lbl:'Morning routine',ico:'☀️',xp:10},
   {id:'skPM',   lbl:'Night routine',  ico:'🌙',xp:10},
+  {id:'suppAM', lbl:'Morning supps',  ico:'💊',xp:10},
+  {id:'suppPM', lbl:'Night supps',    ico:'🌿',xp:5},
 ]
 const LEVELS=[
   {min:0,   max:499,  ico:'🌱',name:'Rookie',    sub:'Building the foundation'},
@@ -528,8 +555,8 @@ const LEVELS=[
   {min:3000,max:4999, ico:'💎',name:'Elite',       sub:'Top-tier discipline'},
   {min:5000,max:9e9,  ico:'👑',name:'Legend',      sub:'Unstoppable'},
 ]
-const WATER_MAX=6
-const XP_TABLE={workout:40,diet:30,sleep:25,water:20,skAM:10,skPM:10}
+const WATER_MAX=3
+const XP_TABLE={workout:40,diet:30,sleep:25,water:20,skAM:10,skPM:10,suppAM:10,suppPM:5}
 
 // ═══════════════ STORAGE
 const LD=k=>{ try{return JSON.parse(localStorage.getItem(k)||'null')}catch{return null} }
@@ -550,15 +577,38 @@ function isWODay(d){const w=dow(d instanceof Date?d:new Date(d+'T12:00'));return
 
 function getRec(key){
   const data=getData()
-  if(!data[key])data[key]={workout:false,diet:false,sleep:false,water:0,skAM:false,skPM:false}
-  return data[key]
+  if(!data[key])data[key]={
+    workout:false,
+    meals:{breakfast:false,snack1:false,lunch:false,snack2:false,dinner:false},
+    sleep:false,water:0,
+    skAM:false,skPM:false,
+    suppAM:{multi:false,vitd:false,fish:false,ashAM:false},
+    suppPM:{ashPM:false}
+  }
+  // migrate old records missing new fields
+  const r=data[key]
+  if(r.diet!==undefined&&!r.meals){r.meals={breakfast:false,snack1:false,lunch:false,snack2:false,dinner:false};delete r.diet}
+  if(!r.suppAM)r.suppAM={multi:false,vitd:false,fish:false,ashAM:false}
+  if(!r.suppPM)r.suppPM={ashPM:false}
+  return r
 }
 function setRec(key,rec){const d=getData();d[key]=rec;setData(d)}
 
-// ═══════════════ HABIT DONE
 function hDone(rec,id){
   if(!rec)return false
   if(id==='water')return(rec.water||0)>=WATER_MAX
+  if(id==='diet'){
+    const m=rec.meals||{}
+    return m.breakfast&&m.snack1&&m.lunch&&m.snack2&&m.dinner
+  }
+  if(id==='suppAM'){
+    const s=rec.suppAM||{}
+    return s.multi&&s.vitd&&s.fish&&s.ashAM
+  }
+  if(id==='suppPM'){
+    const s=rec.suppPM||{}
+    return !!s.ashPM
+  }
   return!!rec[id]
 }
 
@@ -583,7 +633,7 @@ function calcStreak(id){
 
 // ═══════════════ WHICH HABITS COUNT ON DAY
 function habitsForDow(w){
-  const h=['diet','sleep','water','skAM','skPM']
+  const h=['diet','sleep','water','skAM','skPM','suppAM','suppPM']
   if(w===1||w===2||w===3||w===5)h.unshift('workout')
   return h
 }
@@ -667,14 +717,46 @@ function renderToday(){
   }
 
   // Apply card states
-  applyCard('diet', 'dietCard','dietChk','dietST',rec)
   applyCard('sleep','sleepCard','sleepChk','sleepST',rec)
   applyCard('skAM','skAMCard','skAMChk','skAMST',rec)
   applyCard('skPM','skPMCard','skPMChk','skPMST',rec)
+  renderDiet(rec)
   renderWater(rec)
+  renderSuppAM(rec)
+  renderSuppPM(rec)
 }
 
+const SVG_SUB=`<svg width="10" height="8" viewBox="0 0 10 8" fill="none"><polyline points="1,4 3.5,7 9,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 const SVG_CHK=`<svg width="13" height="10" viewBox="0 0 13 10" fill="none"><polyline points="1,5 5,9 12,1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+
+function toggleMeal(key){
+  const tk=todayKey(),rec=getRec(tk)
+  if(!rec.meals)rec.meals={breakfast:false,snack1:false,lunch:false,snack2:false,dinner:false}
+  const wasDone=hDone(rec,'diet')
+  rec.meals[key]=!rec.meals[key]
+  const nowDone=hDone(rec,'diet')
+  setRec(tk,rec)
+  if(nowDone&&!wasDone)awardXP('diet',true)
+  if(!nowDone&&wasDone)awardXP('diet',false)
+  if(nowDone)toast('🥗 All meals done. Clean eating locked.')
+  renderDiet(rec)
+  renderToday()
+}
+
+function toggleSupp(session,key){
+  const tk=todayKey(),rec=getRec(tk)
+  const field='supp'+session
+  if(!rec[field])rec[field]={}
+  const wasDone=hDone(rec,'supp'+session)
+  rec[field][key]=!rec[field][key]
+  const nowDone=hDone(rec,'supp'+session)
+  setRec(tk,rec)
+  if(nowDone&&!wasDone)awardXP('supp'+session,true)
+  if(!nowDone&&wasDone)awardXP('supp'+session,false)
+  if(nowDone)toast(session==='AM'?'💊 Morning supps done.':'🌿 Night supps done.')
+  if(session==='AM')renderSuppAM(rec); else renderSuppPM(rec)
+  renderToday()
+}
 
 function applyCard(id,cardId,chkId,stId,rec){
   const card=document.getElementById(cardId)
@@ -687,17 +769,46 @@ function applyCard(id,cardId,chkId,stId,rec){
   if(st)st.querySelector('.streak-n').textContent=calcStreak(id)
 }
 
+// ═══════════════ RENDER DIET sub-checks
+const MEAL_ITEMS=[
+  {key:'breakfast',label:'Breakfast'},
+  {key:'snack1',   label:'Snack'},
+  {key:'lunch',    label:'Lunch'},
+  {key:'snack2',   label:'Snack'},
+  {key:'dinner',   label:'Dinner'},
+]
+function renderDiet(rec){
+  const m=rec.meals||{}
+  const allDone=hDone(rec,'diet')
+  const card=document.getElementById('dietCard')
+  const chk=document.getElementById('dietChk')
+  const st=document.getElementById('dietST')
+  card.className='h-card'+(allDone?' done':'')
+  if(chk)chk.className='h-check'+(allDone?' done':'')
+  if(st)st.querySelector('.streak-n').textContent=calcStreak('diet')
+  const checks=document.getElementById('dietSubChecks')
+  if(!checks)return
+  checks.innerHTML=MEAL_ITEMS.map(item=>{
+    const on=!!m[item.key]
+    return `<div class="sub-row ${on?'done':''}" onclick="toggleMeal('${item.key}')">
+      <div class="sub-chk">${SVG_SUB}</div>
+      <div class="sub-label">${item.label}</div>
+    </div>`
+  }).join('')
+}
+
+// ═══════════════ RENDER WATER (bottles)
 function renderWater(rec){
   const filled=rec.water||0
   const gg=document.getElementById('glassGrid');gg.innerHTML=''
   for(let i=0;i<WATER_MAX;i++){
     const g=document.createElement('div')
     g.className='glass'+(i<filled?' on':'')
-    g.textContent=i<filled?'💧':'○'
+    g.textContent=i<filled?'🍶':'○'
     g.onclick=()=>tapGlass(i);gg.appendChild(g)
   }
-  const L=(filled*500/1000).toFixed(1)
-  document.getElementById('waterMeta').innerHTML=`<strong>${filled}</strong> of ${WATER_MAX} glasses · <strong>${L}L</strong> of 3L`
+  const L=(filled*1).toFixed(0)
+  document.getElementById('waterMeta').innerHTML=`<strong>${filled}</strong> of ${WATER_MAX} bottles · <strong>${L}L</strong> of 3L`
   const done=filled>=WATER_MAX
   const card=document.getElementById('waterCard')
   const chk=document.getElementById('waterChk')
@@ -705,6 +816,59 @@ function renderWater(rec){
   if(chk)chk.className='h-check'+(done?' done-blue':'')
   const st=document.getElementById('waterST')
   if(st)st.querySelector('.streak-n').textContent=calcStreak('water')
+}
+
+// ═══════════════ RENDER SUPPLEMENTS
+const SUPP_AM=[
+  {key:'multi', label:'Multivitamin', badge:'×1'},
+  {key:'vitd',  label:'Vitamin D',   badge:'×2'},
+  {key:'fish',  label:'Fish Oil',    badge:'×2'},
+  {key:'ashAM', label:'Ashwagandha', badge:'×1 AM'},
+]
+const SUPP_PM=[
+  {key:'ashPM', label:'Ashwagandha', badge:'×1 PM'},
+]
+function renderSuppAM(rec){
+  const s=rec.suppAM||{}
+  const allDone=hDone(rec,'suppAM')
+  const card=document.getElementById('suppAMCard')
+  const chk=document.getElementById('suppAMChk')
+  const st=document.getElementById('suppAMST')
+  if(!card)return
+  card.className='h-card'+(allDone?' done':'')
+  if(chk)chk.className='h-check'+(allDone?' done':'')
+  if(st)st.querySelector('.streak-n').textContent=calcStreak('suppAM')
+  const checks=document.getElementById('suppAMSubChecks')
+  if(!checks)return
+  checks.innerHTML=SUPP_AM.map(item=>{
+    const on=!!s[item.key]
+    return `<div class="sub-row ${on?'done-v':''}" onclick="toggleSupp('AM','${item.key}')">
+      <div class="sub-chk">${SVG_SUB}</div>
+      <div class="sub-label">${item.label}</div>
+      <div class="sub-badge">${item.badge}</div>
+    </div>`
+  }).join('')
+}
+function renderSuppPM(rec){
+  const s=rec.suppPM||{}
+  const allDone=hDone(rec,'suppPM')
+  const card=document.getElementById('suppPMCard')
+  const chk=document.getElementById('suppPMChk')
+  const st=document.getElementById('suppPMST')
+  if(!card)return
+  card.className='h-card'+(allDone?' done':'')
+  if(chk)chk.className='h-check'+(allDone?' done':'')
+  if(st)st.querySelector('.streak-n').textContent=calcStreak('suppPM')
+  const checks=document.getElementById('suppPMSubChecks')
+  if(!checks)return
+  checks.innerHTML=SUPP_PM.map(item=>{
+    const on=!!s[item.key]
+    return `<div class="sub-row ${on?'done-v':''}" onclick="toggleSupp('PM','${item.key}')">
+      <div class="sub-chk">${SVG_SUB}</div>
+      <div class="sub-label">${item.label}</div>
+      <div class="sub-badge">${item.badge}</div>
+    </div>`
+  }).join('')
 }
 
 // ═══════════════ INTERACTIONS
@@ -792,7 +956,11 @@ function renderCal(){
       ${list.map(id=>{
         const done2=hDone(rec2,id)
         const lbl=HABITS.find(h=>h.id===id)?.lbl||id
-        const val=id==='water'?`${rec2.water||0}/${WATER_MAX} glasses`:(done2?'Done':'—')
+        const val=id==='water'?`${rec2.water||0}/${WATER_MAX} bottles`
+              :id==='diet'?(() => { const m=rec2.meals||{}; const c=[m.breakfast,m.snack1,m.lunch,m.snack2,m.dinner].filter(Boolean).length; return `${c}/5 meals` })()
+              :id==='suppAM'?(() => { const s=rec2.suppAM||{}; const c=[s.multi,s.vitd,s.fish,s.ashAM].filter(Boolean).length; return `${c}/4 taken` })()
+              :id==='suppPM'?(() => { const s=rec2.suppPM||{}; return s.ashPM?'Done':'—' })()
+              :(done2?'Done':'—')
         const isBlue=id==='water'
         return `<div class="dd-row">
           <div class="dd-dot ${done2?(isBlue?'on-b':'on'):'off'}"></div>
