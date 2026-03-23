@@ -235,22 +235,49 @@ body{
 .cdot.on{background:var(--g1)}
 .cdot.on-blue{background:var(--b0)}
 
-/* Day detail */
-.day-detail-wrap{padding:0 14px 12px}
-.day-detail{background:var(--ink2);border:1px solid var(--line2);border-radius:18px;overflow:hidden}
-.dd-head{padding:14px 16px 10px;border-bottom:1px solid var(--line)}
-.dd-date{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--head)}
-.dd-score{font-size:11px;color:var(--mid);margin-top:2px}
-.dd-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--line)}
-.dd-row:last-child{border-bottom:none}
-.dd-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.dd-lbl{font-size:13px;flex:1;color:var(--mid)}
-.dd-val{font-size:12px;font-weight:600;color:var(--dim)}
-.dd-dot.on{background:var(--g1)}
-.dd-dot.on-b{background:var(--b0)}
-.dd-dot.off{background:var(--ink4)}
-.dd-val.done{color:var(--g0)}
-.dd-val.done-b{color:var(--b0)}
+/* Day edit panel */
+.edit-panel{background:var(--ink2);border:1px solid var(--line2);border-radius:18px;overflow:hidden;margin:0 14px 12px}
+.edit-head{padding:14px 16px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.edit-date{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--head)}
+.edit-score{font-size:11px;color:var(--mid);margin-top:2px}
+.edit-close{width:28px;height:28px;border-radius:50%;background:var(--ink4);border:1px solid var(--line2);color:var(--mid);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.edit-close:active{background:var(--ink3)}
+.edit-section-lbl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:10px 16px 4px}
+.edit-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-top:1px solid var(--line);cursor:pointer;transition:background .15s}
+.edit-row:active{background:var(--ink3)}
+.edit-row.on{background:rgba(139,239,58,0.05)}
+.edit-row.on-v{background:rgba(192,132,252,0.05)}
+.edit-row.on-b{background:rgba(94,184,255,0.05)}
+.edit-chk{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+.edit-row.on .edit-chk{background:var(--g1);border-color:var(--g1)}
+.edit-row.on-v .edit-chk{background:var(--v0);border-color:var(--v0)}
+.edit-row.on-b .edit-chk{background:var(--b0);border-color:var(--b0)}
+.edit-chk svg{opacity:0;transform:scale(.4);transition:all .18s}
+.edit-row.on .edit-chk svg,.edit-row.on-v .edit-chk svg,.edit-row.on-b .edit-chk svg{opacity:1;transform:scale(1)}
+.edit-lbl{font-size:13px;flex:1;color:var(--mid);transition:color .15s}
+.edit-row.on .edit-lbl{color:var(--g0)}
+.edit-row.on-v .edit-lbl{color:var(--v0)}
+.edit-row.on-b .edit-lbl{color:var(--b0)}
+.edit-badge{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--dim);background:var(--ink4);border-radius:6px;padding:2px 6px}
+/* water bottles in edit */
+.edit-bottles{display:flex;gap:6px;padding:10px 16px 12px;border-top:1px solid var(--line)}
+.edit-bottle{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--line2);background:var(--ink3);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s}
+.edit-bottle.on{background:var(--b2);border-color:rgba(94,184,255,0.4)}
+.edit-bottle:active{transform:scale(.88)}
+.edit-past-note{font-size:10px;color:var(--dim);padding:6px 16px 10px;font-style:italic}
+.edit-btn{display:block;width:calc(100% - 28px);margin:12px 14px;padding:13px;border-radius:14px;background:var(--ink4);border:1px solid var(--line2);color:var(--body);font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .18s;text-align:center}
+.edit-btn:active{transform:scale(.97)}
+.edit-btn.primary{background:rgba(139,239,58,0.12);border-color:rgba(139,239,58,0.25);color:var(--g0)}
+.edit-btn.danger{background:rgba(255,107,107,0.08);border-color:rgba(255,107,107,0.2);color:var(--r0)}
+.summary-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid var(--line)}
+.summary-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.summary-dot.on{background:var(--g1)}
+.summary-dot.on-b{background:var(--b0)}
+.summary-dot.off{background:var(--ink4)}
+.summary-lbl{font-size:13px;flex:1;color:var(--mid)}
+.summary-val{font-size:12px;font-weight:600;color:var(--dim)}
+.summary-val.done{color:var(--g0)}
+.summary-val.done-b{color:var(--b0)}
 
 /* ── STATS ── */
 .stats-hero{
@@ -903,7 +930,7 @@ function tapGlass(i){
 }
 
 // ═══════════════ CALENDAR
-let calY,calM,selDay=null
+let calY,calM,selDay=null,editMode=false
 function initCal(){const t=today();calY=t.getFullYear();calM=t.getMonth()}
 function calShift(d){
   calM+=d
@@ -939,37 +966,174 @@ function renderCal(){
       return `<div class="cdot ${on?(id==='water'?'on-blue':'on'):''}"></div>`
     }).join('')
     el.innerHTML=`<div class="cd">${day}</div><div class="cal-dots">${dotHTML}</div>`
-    el.onclick=()=>{selDay=selDay===k?null:k;renderCal()}
+    el.onclick=()=>{
+      if(selDay===k){selDay=null;editMode=false}
+      else{selDay=k;editMode=false}
+      renderCal()
+    }
     grid.appendChild(el)
   }
+  renderEditPanel()
+}
+
+function renderEditPanel(){
   const dw=document.getElementById('dayDetailWrap')
-  if(selDay){
-    const d=new Date(selDay+'T12:00:00'),w2=dow(d)
-    const rec2=data[selDay]||{}
-    const{done:dd2,total:tt2}=dayStats(rec2,w2)
-    const list=habitsForDow(w2)
-    dw.innerHTML=`<div class="day-detail-wrap"><div class="day-detail">
-      <div class="dd-head">
-        <div class="dd-date">${DAYS[w2]}, ${MONTHS_S[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}</div>
-        <div class="dd-score">${dd2} of ${tt2} habits completed</div>
+  if(!selDay){dw.innerHTML='';return}
+  const data=getData()
+  const d=new Date(selDay+'T12:00:00'),w2=dow(d)
+  const rec=getRec(selDay)
+  const{done:dd2,total:tt2}=dayStats(rec,w2)
+  const isToday=selDay===todayKey()
+  const woDay=isWODay(d)
+  const wo=WO[w2]
+
+  const SVG_E=`<svg width="11" height="9" viewBox="0 0 11 9" fill="none"><polyline points="1,4.5 4,8 10,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+
+  // ── SHARED HEADER ──
+  let html=`<div class="edit-panel">
+    <div class="edit-head">
+      <div>
+        <div class="edit-date">${DAYS[w2]}, ${MONTHS_S[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}</div>
+        <div class="edit-score">${dd2} of ${tt2} completed</div>
       </div>
-      ${list.map(id=>{
-        const done2=hDone(rec2,id)
-        const lbl=HABITS.find(h=>h.id===id)?.lbl||id
-        const val=id==='water'?`${rec2.water||0}/${WATER_MAX} bottles`
-              :id==='diet'?(() => { const m=rec2.meals||{}; const c=[m.breakfast,m.snack1,m.lunch,m.snack2,m.dinner].filter(Boolean).length; return `${c}/5 meals` })()
-              :id==='suppAM'?(() => { const s=rec2.suppAM||{}; const c=[s.multi,s.vitd,s.fish,s.ashAM].filter(Boolean).length; return `${c}/4 taken` })()
-              :id==='suppPM'?(() => { const s=rec2.suppPM||{}; return s.ashPM?'Done':'—' })()
-              :(done2?'Done':'—')
-        const isBlue=id==='water'
-        return `<div class="dd-row">
-          <div class="dd-dot ${done2?(isBlue?'on-b':'on'):'off'}"></div>
-          <div class="dd-lbl">${lbl}</div>
-          <div class="dd-val ${done2?(isBlue?'done-b':'done'):''}">${val}</div>
-        </div>`
-      }).join('')}
-    </div></div>`
-  } else dw.innerHTML=''
+      <div class="edit-close" onclick="selDay=null;editMode=false;renderCal()">✕</div>
+    </div>`
+
+  if(!isToday && !editMode){
+    // ── READ-ONLY SUMMARY VIEW ──
+    const list=habitsForDow(w2)
+    list.forEach(id=>{
+      const done2=hDone(rec,id)
+      const lbl=HABITS.find(h=>h.id===id)?.lbl||id
+      const isBlue=id==='water'
+      const val=id==='water'?`${rec.water||0}/${WATER_MAX} bottles`
+        :id==='diet'?`${[rec.meals?.breakfast,rec.meals?.snack1,rec.meals?.lunch,rec.meals?.snack2,rec.meals?.dinner].filter(Boolean).length}/5 meals`
+        :id==='suppAM'?`${[rec.suppAM?.multi,rec.suppAM?.vitd,rec.suppAM?.fish,rec.suppAM?.ashAM].filter(Boolean).length}/4 taken`
+        :id==='suppPM'?(rec.suppPM?.ashPM?'Done':'—')
+        :(done2?'Done':'—')
+      html+=`<div class="summary-row">
+        <div class="summary-dot ${done2?(isBlue?'on-b':'on'):'off'}"></div>
+        <div class="summary-lbl">${lbl}</div>
+        <div class="summary-val ${done2?(isBlue?'done-b':'done'):''}">${val}</div>
+      </div>`
+    })
+    html+=`</div>
+      <button class="edit-btn primary" onclick="editMode=true;renderEditPanel()">✏️  Edit this day</button>`
+
+  } else {
+    // ── EDIT MODE ──
+    function eRow(id,label,isOn,colorCls,onclick,badge=''){
+      return `<div class="edit-row ${isOn?colorCls:''}" onclick="${onclick}">
+        <div class="edit-chk">${SVG_E}</div>
+        <div class="edit-lbl">${label}</div>
+        ${badge?`<div class="edit-badge">${badge}</div>`:''}
+      </div>`
+    }
+
+    if(woDay){
+      html+=`<div class="edit-section-lbl">Workout</div>`
+      html+=eRow('workout',wo.n,rec.workout,'on',`editToggle('${selDay}','workout')`)
+    } else {
+      html+=`<div class="edit-section-lbl">Workout</div>
+      <div style="padding:10px 16px;font-size:12px;color:var(--dim);border-top:1px solid var(--line)">${wo.n}</div>`
+    }
+
+    const m=rec.meals||{}
+    html+=`<div class="edit-section-lbl">Diet — tap each meal</div>`
+    MEAL_ITEMS.forEach(item=>{
+      html+=eRow('diet',item.label,!!m[item.key],'on',`editToggleMeal('${selDay}','${item.key}')`)
+    })
+
+    html+=`<div class="edit-section-lbl">Sleep</div>`
+    html+=eRow('sleep','Sleep 8 hrs',rec.sleep,'on',`editToggle('${selDay}','sleep')`)
+
+    const filled=rec.water||0
+    html+=`<div class="edit-section-lbl">Water</div><div class="edit-bottles">`
+    for(let i=0;i<WATER_MAX;i++){
+      html+=`<div class="edit-bottle ${i<filled?'on':''}" onclick="editTapBottle('${selDay}',${i})">${i<filled?'🍶':'○'}</div>`
+    }
+    html+=`</div>`
+
+    html+=`<div class="edit-section-lbl">Skincare + Oral</div>`
+    html+=eRow('skAM','Morning routine',rec.skAM,'on',`editToggle('${selDay}','skAM')`)
+    html+=eRow('skPM','Night routine',rec.skPM,'on',`editToggle('${selDay}','skPM')`)
+
+    const sAM=rec.suppAM||{}
+    html+=`<div class="edit-section-lbl">Morning supplements</div>`
+    SUPP_AM.forEach(item=>{
+      html+=eRow('suppAM',item.label,!!sAM[item.key],'on-v',`editToggleSupp('${selDay}','AM','${item.key}')`,item.badge)
+    })
+
+    const sPM=rec.suppPM||{}
+    html+=`<div class="edit-section-lbl">Night supplements</div>`
+    SUPP_PM.forEach(item=>{
+      html+=eRow('suppPM',item.label,!!sPM[item.key],'on-v',`editToggleSupp('${selDay}','PM','${item.key}')`,item.badge)
+    })
+
+    html+=`<div class="edit-past-note">Changes save instantly</div>`
+    html+=`</div>`
+    if(!isToday){
+      html+=`<button class="edit-btn" onclick="editMode=false;renderEditPanel()">← Back to summary</button>`
+    }
+  }
+
+  dw.innerHTML=html
+}
+
+// ── EDIT ACTIONS (past days) ──────────────────────────────────────────────
+function editToggle(key,id){
+  const data=getData()
+  const rec=getRec(key)
+  const prev=hDone(rec,id)
+  rec[id]=!rec[id]
+  data[key]=rec;setData(data)
+  // XP: only adjust if editing today
+  if(key===todayKey())awardXP(id,!prev)
+  renderCal()
+  if(key===todayKey())renderToday()
+}
+
+function editToggleMeal(key,mealKey){
+  const data=getData()
+  const rec=getRec(key)
+  if(!rec.meals)rec.meals={breakfast:false,snack1:false,lunch:false,snack2:false,dinner:false}
+  const wasDone=hDone(rec,'diet')
+  rec.meals[mealKey]=!rec.meals[mealKey]
+  const nowDone=hDone(rec,'diet')
+  data[key]=rec;setData(data)
+  if(key===todayKey()){
+    if(nowDone&&!wasDone)awardXP('diet',true)
+    if(!nowDone&&wasDone)awardXP('diet',false)
+  }
+  renderCal()
+  if(key===todayKey())renderToday()
+}
+
+function editTapBottle(key,i){
+  const data=getData()
+  const rec=getRec(key)
+  const prev=rec.water||0
+  rec.water=i<prev?i:i+1
+  const nowDone=rec.water>=WATER_MAX,wasDone=prev>=WATER_MAX
+  data[key]=rec;setData(data)
+  if(key===todayKey()){
+    if(nowDone&&!wasDone)awardXP('water',true)
+    if(!nowDone&&wasDone)awardXP('water',false)
+  }
+  renderCal()
+  if(key===todayKey())renderWater(rec)
+}
+
+function editToggleSupp(key,session,suppKey){
+  const data=getData()
+  const rec=getRec(key)
+  const field='supp'+session
+  if(!rec[field])rec[field]={}
+  const wasDone=hDone(rec,field.toLowerCase().replace('supp','supp'))
+  rec[field][suppKey]=!rec[field][suppKey]
+  data[key]=rec;setData(data)
+  renderCal()
+  if(key===todayKey())renderToday()
 }
 
 // ═══════════════ STATS
